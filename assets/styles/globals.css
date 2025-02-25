@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer component{
+    .main-heading{
+        @apply text-[44px] text-[red] bg-[grey];
+    }
+}
+
 @layer utilities {
   .wrapper {
     @apply max-w-7xl lg:mx-auto p-5 md:px-10 w-full;
@@ -95,7 +101,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border;
   }
   body {
     @apply bg-background text-foreground;

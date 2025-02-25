@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div className='text-[red]'>Home Page</div>
+    <div className='main-heading'>Home Page</div>
   )
 }
