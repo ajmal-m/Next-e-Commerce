@@ -8,7 +8,7 @@ import {
     DropdownMenuLabel ,
     DropdownMenuSeparator,
     DropdownMenuTrigger
-} from '@radix-ui/react-dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {SunIcon, MoonIcon, SunMoon} from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
