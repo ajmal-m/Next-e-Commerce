@@ -4,6 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getProductBySlug } from '@/lib/actions/product.actions';
 import React from 'react';
 import { notFound } from 'next/navigation';
+import ProductPrice from '@/components/shared/product/product-price';
+import ProductImages from '@/components/shared/product/product-images';
 
 export default async  function page(props:{
   params: Promise<{ slug : string}>
@@ -22,7 +24,7 @@ export default async  function page(props:{
       <div className='grid grid-cols-1 md:grid-cols-5'>
         {/* Images column */}
         <div className='col-span-2'>
-          {/* Image component */}
+          <ProductImages images={product.images}/>
         </div>
         {/* Details Column */}
         <div className='col-span-2 p-5'>
@@ -30,7 +32,44 @@ export default async  function page(props:{
             <p> {product.brand} {product.category}</p>
             <h2 className="h3-bold">{product.name}</h2>
             <p>{product.rating} of {product.numReviews} Reviews</p>
+            <div className="flex flex-col sm:flex-row sm:item-center gap-3">
+              <ProductPrice value={Number(product.price)} className='w-24 rounded-full bg-green-100 text-green-700 px-5 py-2'/>
+            </div>
           </div>
+          <div className='mt-10'>
+            <p className="font-semibold">Description</p>
+            <p>{product.description}</p>
+          </div>
+        </div>
+        {/* ACTIVE COLUMNS */}
+        <div>
+          <Card>
+            <CardContent className='p-4'>
+              <div className="flex justify-between mb-2">
+                <div>Price</div>
+                <div>
+                  <ProductPrice value={Number(product.price)}/>
+                </div>
+              </div>
+
+              <div className="flex justify-between mb-2">
+                <div>Status</div>
+                {
+                  product.stock > 0 ? (
+                    <Badge variant='outline'>In Stock</Badge>
+                  ) : (
+                    <Badge variant='destructive'>Out Of Stock</Badge>
+                  )
+                }
+              </div>
+
+              {
+                product.stock && (
+                  <Button className='w-full'>Add To Cart</Button>
+                )
+              }
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
