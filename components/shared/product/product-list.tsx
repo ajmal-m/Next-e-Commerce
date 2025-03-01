@@ -1,8 +1,9 @@
 import React from 'react'
 import ProductCard from './product-card';
+import { Product } from '@/types';
 
 export default function productList({ data, title, limit} : {
-    data:any, 
+    data:Product[], 
     title?:string,
     limit?:number
 }) {
@@ -15,7 +16,7 @@ export default function productList({ data, title, limit} : {
             data.length > 0 ? (
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {
-                        limitedData.map((product : any) => (
+                        limitedData.map((product : Product) => (
                             <ProductCard product={product}  key={product.slug}/>
                         ))
                     }
