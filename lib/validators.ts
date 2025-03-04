@@ -1,4 +1,4 @@
-import { z} from 'zod';
+import {  z} from 'zod';
 import { formatNumberWithDecimal } from './utils';
 
 const currency =  z.string().refine( (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))), 'Price Must have Two decimal places');
@@ -16,3 +16,11 @@ export const insertProductSchema = z.object({
     banner: z.string().nullable(),
     price: currency
 })
+
+
+
+// Schema for user signin
+export const signInFormSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, 'Password must be atleast 6 characters')
+});
