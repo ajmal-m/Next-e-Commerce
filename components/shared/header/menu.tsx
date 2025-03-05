@@ -3,7 +3,8 @@ import ModeToggle from './mode-toggle'
 import { Button } from '@/components/ui/button'
 import {  EllipsisVertical, ShoppingCart, UserIcon } from 'lucide-react'
 import Link from 'next/link'
-import { Sheet,  SheetContent,SheetTitle,SheetTrigger } from '@/components/ui/sheet'
+import { Sheet,  SheetContent,SheetTitle,SheetTrigger } from '@/components/ui/sheet';
+import UserButton from './user-button'
 
 export default function menu() {
   return (
@@ -15,11 +16,7 @@ export default function menu() {
                     <ShoppingCart/> Cart
                 </Link>
             </Button>
-            <Button asChild>
-                <Link href='/sign-in'>
-                    <UserIcon/> Sign In
-                </Link>
-            </Button>
+          <UserButton/>
         </nav>
 
         <nav className="md:hidden">
@@ -35,11 +32,7 @@ export default function menu() {
                         <ShoppingCart></ShoppingCart> Cart
                     </Link>
                    </Button>
-                   <Button asChild>
-                        <Link href='/sign-in'>
-                            <UserIcon/> Sign In
-                        </Link>
-                    </Button>
+                   <UserButton/>
                 </SheetContent>
             </Sheet>
         </nav>
