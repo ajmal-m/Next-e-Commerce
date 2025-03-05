@@ -6,3 +6,10 @@ export const SignInDefaultValue = {
     email: '',
     password:''
 }
+
+export const SignUpDefaultValue = {
+    name:'',
+    email: '',
+    password:'',
+    confirmPassword:''
+}

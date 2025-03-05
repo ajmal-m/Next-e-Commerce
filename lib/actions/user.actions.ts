@@ -50,6 +50,9 @@ export async function signUpUser(prevState : unknown, formData: FormData){
 
         user.password = hashSync(user.password, 10);
 
+        console.log("User --> ", user, plainPassword);
+        
+
         await prisma.user.create({
             data:{
                 name:user.name ,
@@ -58,16 +61,21 @@ export async function signUpUser(prevState : unknown, formData: FormData){
             }
         })
 
+        console.log(" after User --> ", user, plainPassword);
+
         await signIn("credentials", {
             email: user.email,
             password:plainPassword,
         })
+
+        // console.log("after user", prisma.user.findMany())
 
         return {
             success: true,
             message:"User registered successfully"
         };
     } catch (error) {
+        console.log(error)
         if(isRedirectError(error)){
             throw error;
         }
