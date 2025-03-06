@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
-export default function productImages({images}: {images: string[]}) {
+export default function ProductImages({images}: {images: string[]}) {
     const [current, setCurrent]  = useState(0);
   return (
     <div className="space-y-4">

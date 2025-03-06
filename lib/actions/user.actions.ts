@@ -53,7 +53,7 @@ export async function signUpUser(prevState : unknown, formData: FormData){
         console.log("User --> ", user, plainPassword);
         
 
-        await prisma.user.create({
+        const update = await prisma.user.create({
             data:{
                 name:user.name ,
                 email: user.email,
@@ -61,7 +61,7 @@ export async function signUpUser(prevState : unknown, formData: FormData){
             }
         })
 
-        console.log(" after User --> ", user, plainPassword);
+        console.log(" after User --> ", update);
 
         await signIn("credentials", {
             email: user.email,
