@@ -34,7 +34,6 @@ export default function SignUpForm() {
                     id='name' 
                     name='name' 
                     type='text' 
-                    required 
                     autoComplete='name'
                     defaultValue={SignUpDefaultValue.name}
                 />
@@ -45,8 +44,7 @@ export default function SignUpForm() {
                 <Input 
                     id='email' 
                     name='email' 
-                    type='email' 
-                    required 
+                    type='text' 
                     autoComplete='email'
                     defaultValue={SignUpDefaultValue.email}
                 />
