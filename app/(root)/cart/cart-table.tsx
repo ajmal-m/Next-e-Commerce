@@ -10,6 +10,8 @@ import Image from "next/image";
 import {Table, TableCaption, TableBody, TableHead, TableHeader, TableRow, TableCell} from '@/components/ui/table';
 import { Cart } from "@/types";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
+import { CardContent, Card } from "@/components/ui/card";
 
 export default function CartTable({cart}: {cart?:Cart}) {
 
@@ -78,6 +80,23 @@ export default function CartTable({cart}: {cart?:Cart}) {
                             </TableBody>
                         </Table>
                     </div>
+                    <Card>
+                        <CardContent className="p-4 gap-4">
+                            <div className="pb-3 text-xl">
+                                SubTotal({ cart.items.reduce((acc, item) => acc+item.qty, 0)}):
+                                <span className="font-bold">{formatCurrency(cart.itemsPrice)}</span>
+                            </div>
+                            <Button className="w-full" disabled={isPending} onClick={() => startTransition(() =>{
+                                router.push('/shipping-address');
+                            })}>
+                                { isPending ? (
+                                    <Loader className="w-4 h-4 animate-spin"/>
+                                ) : (
+                                    <ArrowRight className="w-4 h-4"/>
+                                )}{' '}Proceed to Checkout
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </>
