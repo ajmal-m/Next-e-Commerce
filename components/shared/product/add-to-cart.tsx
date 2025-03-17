@@ -58,13 +58,13 @@ export default function AddToCart({item, cart} : { item: CartItem, cart ?: Cart}
         <div>
             <Button type="button" variant={'outline'} onClick={handleRemoveFromCart}>
                 {
-                    isPending ? (<Loader/>) : ( <Minus className="h-4 w-4"/>)
+                    isPending ? (<Loader className="w-4 h-4 animate-spin"/>) : ( <Minus className="h-4 w-4"/>)
                 }
             </Button>
             <span className="px-2">{existItem.qty}</span>
             <Button type="button" variant={'outline'} onClick={handleAddToCart}>
                 {
-                    isPending ? (<Loader/>) : (<Plus className="h-4 w-4"/>)
+                    isPending ? (<Loader className="w-4 h-4 animate-spin"/>) : (<Plus className="h-4 w-4"/>)
                 }
             </Button>
         </div>  
@@ -75,7 +75,7 @@ export default function AddToCart({item, cart} : { item: CartItem, cart ?: Cart}
             type="button"
             onClick={handleAddToCart}
         >
-           { isPending ? (<Loader/>) : ( <Plus/>)} Add To Cart
+           { isPending ? (<Loader className="w-4 h-4 animate-spin"/>) : ( <Plus/>)} Add To Cart
         </Button>   
     );
 }
