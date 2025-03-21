@@ -1,11 +1,12 @@
 'use server'
-import { shippingAddressSchema, signInFormSchema, signUpFormSchema } from "../validators";
+import { paymentMethodSchema, shippingAddressSchema, signInFormSchema, signUpFormSchema } from "../validators";
 import { auth, signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { formatErrors } from "../utils";
 import { ShippingAddress } from "@/types";
+import {z} from 'zod';
 
 
 // Sign in user with credentails
@@ -128,6 +129,34 @@ export async function updateUserAddress(data: ShippingAddress){
             message:"User updated successfully.."
         }
 
+    } catch (error) {
+        return { success: false, message: formatErrors(error)};
+    }
+};
+
+
+
+// Update user's payment method
+export async function updateUserPaymentMethod(data : z.infer<typeof paymentMethodSchema>){
+    try {
+        const session = await auth();
+        const currentUser = await prisma.user.findFirst({
+            where:{id : session?.user?.id}
+        });
+        if(!currentUser) throw new Error("User not found");
+
+        const paymentMethod = paymentMethodSchema.parse(data);
+
+        await prisma.user.update({
+            where:{ id: currentUser.id},
+            data: { paymentMethod : paymentMethod.type}
+        });
+
+
+        return {
+            success:false,
+            message:"User updated successfully"
+        }
     } catch (error) {
         return { success: false, message: formatErrors(error)};
     }
