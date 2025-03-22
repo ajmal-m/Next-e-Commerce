@@ -124,7 +124,7 @@ export async function addItemToCart(data : CartItem){
 
             return {
                 success: true,
-                message: `${product.name} ${existItem ? 'updated in' : 'added into'} cart`;
+                message: `${product.name} ${existItem ? 'updated in' : 'added into'} cart`
             }
         }
 
