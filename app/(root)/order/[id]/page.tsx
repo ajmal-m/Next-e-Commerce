@@ -24,10 +24,14 @@ export default async function OrderDetailPage(props: {
     
   return (
     <>
-      <OrderDetailTable order={{
-        ...order,
-        shippingAddress: order.shippingAddress as ShippingAddress
-      }}/>
+      <OrderDetailTable 
+        order={{
+          ...order,
+          shippingAddress: order.shippingAddress as ShippingAddress
+        }}
+
+        paypalClientId={process.env.PAYPAL_CLIENT_ID || 'sb'}
+      />
     </>
   )
 }
