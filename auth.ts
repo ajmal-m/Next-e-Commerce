@@ -125,6 +125,11 @@ export const config = {
                     }
                 }
             }
+
+            // Handle session update
+            if(session.user.name && trigger ==='trigger'){
+                token.name = session.user.name;
+            }
             return token;
         },
         authorized({request, auth} : any){
