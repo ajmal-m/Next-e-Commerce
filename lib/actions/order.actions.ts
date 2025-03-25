@@ -348,6 +348,7 @@ export async function getOrderSummary(){
         productCount,
         usesrCount,
         totalSales,
-        latestSales
+        latestSales,
+        salesData
     }
 }
