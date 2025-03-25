@@ -329,5 +329,25 @@ export async function getOrderSummary(){
      }));
 
     // Get lastest sales
-    const latestSales = 
+    const latestSales = await prisma.order.findMany({
+        orderBy:{
+            createdAt:"desc"
+        },
+        include:{
+            user:{
+                select:{
+                    name:true
+                }
+            }
+        },
+        take:6
+    });
+
+    return {
+        orderCount,
+        productCount,
+        usesrCount,
+        totalSales,
+        latestSales
+    }
 }
