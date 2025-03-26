@@ -1,4 +1,4 @@
-import { getAllOrders } from "@/lib/actions/order.actions";
+import { deleteOrder, getAllOrders } from "@/lib/actions/order.actions";
 import { auth } from "@/auth";
 import { Metadata } from "next";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -6,6 +6,7 @@ import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
 import Link from "next/link";
 import Pagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
+import DeleteDialog from "@/components/shared/delete-dialog";
 
 export const metadata: Metadata = {
     title:"Admin Orders"
@@ -72,6 +73,7 @@ export default async function AdminOrderPage(props:{
                                         <span className="px-2">Details</span>
                                     </Link> 
                                 </Button>
+                                <DeleteDialog id={order.id} action={deleteOrder}/>
                             </TableCell>
                             update </TableRow>
                         ))
