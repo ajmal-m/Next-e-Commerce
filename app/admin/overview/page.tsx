@@ -8,12 +8,15 @@ import { formatCurrency, formatDateTime, formatNumber } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
 import Charts from './charts';
+import { requireAdmin } from '@/lib/auth-guard';
 
 export const metadata : Metadata = {
   title: "Admin Dashboard"
 };
 
 export default async function AdminOverviewPage() {
+
+  await requireAdmin();
 
   const session = await auth();
 
