@@ -16,7 +16,14 @@ export const insertProductSchema = z.object({
     isFeatured: z.boolean(),
     banner: z.string().nullable(),
     price: currency
-})
+});
+
+
+// Schema for updating a prosuct
+export const updateProductSchema = insertProductSchema.extend({
+    id : z.string().min(1, 'Id is required'),
+
+});
 
 
 
