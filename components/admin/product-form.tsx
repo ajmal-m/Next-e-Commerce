@@ -5,7 +5,7 @@ import { insertProductSchema, updateProductSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -13,6 +13,7 @@ import slugify from 'slugify';
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { createProduct, updateProduct } from "@/lib/actions/product.actions";
 
 export default function ProductForm({ type, product, productId} : { 
     type: 'create' | 'update' ;
@@ -24,10 +25,42 @@ export default function ProductForm({ type, product, productId} : {
     const form = useForm<z.infer<typeof insertProductSchema>>({
         resolver:type==='create' ? zodResolver(insertProductSchema) : zodResolver(updateProductSchema),
         defaultValues : product && type=='update' ? product : productDefaultValues
-    })
+    });
+
+
+    const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
+      // On Create
+      if(type === 'create'){
+        const res = await createProduct(values);
+
+        if(!res.success){
+          toast.error(res.message);
+        }else{
+          toast.success(res.message);
+          router.push('/admin/products')
+        }
+      }else{
+        // On Update
+
+        if(!productId){
+          router.push('/admin/products');
+          return
+        }
+        const res = await updateProduct({ ...values, id: productId} );
+
+        if(!res.success){
+          toast.error(res.message);
+        }else{
+          toast.success(res.message);
+          router.push('/admin/products')
+        }
+
+      }
+    };
+
   return (
     <Form {...form}>
-        <form className="space-y-8">
+        <form className="space-y-8" method="POST" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-5">
               {/* Name */}
               <FormField
