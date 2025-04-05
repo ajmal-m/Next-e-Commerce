@@ -3,7 +3,7 @@ import Pagination from "@/components/shared/pagination";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { getAllUsers } from "@/lib/actions/user.actions";
+import { getAllUsers, deleteUser } from "@/lib/actions/user.actions";
 import { formatId } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -61,7 +61,7 @@ export default async function AdminUsersPage(props:{
                                             <span className="px-2">Edit</span>
                                         </Link> 
                                     </Button>
-                                    {/* <DeleteDialog id={user.id} action={deleteOrder}/> */}
+                                    <DeleteDialog id={user.id} action={deleteUser}/>
                                 </TableCell>
                             </TableRow>
                             ))
