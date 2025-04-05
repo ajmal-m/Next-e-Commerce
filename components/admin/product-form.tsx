@@ -3,7 +3,7 @@
 import { productDefaultValues } from "@/lib/constants";
 import { insertProductSchema, updateProductSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product } from "@prisma/client";
+import { Product } from "@/types";
 import { useRouter } from "next/router";
 import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";

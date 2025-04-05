@@ -33,6 +33,18 @@ export async function getProductBySlug(slug: string){
 };
 
 
+// Get single products by ID
+export async function getProductByID(productId: string){
+    const data = await prisma.product.findFirst({
+        where:{
+            id: productId
+        }
+    });
+
+   return convertToPlainObject(data);
+};
+
+
 
 // Get ALl Products
 export async function getAllProducts({
