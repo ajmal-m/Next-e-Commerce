@@ -57,7 +57,7 @@ export default async function AdminUsersPage(props:{
                                 </TableCell>
                                 <TableCell>
                                     <Button asChild variant={'outline'} size={'sm'}>
-                                        <Link href={`admin/userss/${user.id}`}>
+                                        <Link href={`admin/users/${user.id}`}>
                                             <span className="px-2">Edit</span>
                                         </Link> 
                                     </Button>
