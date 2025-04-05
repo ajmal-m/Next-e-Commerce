@@ -38,6 +38,7 @@ export default async function AdminOrderPage(props:{
                     <TableRow>
                         <TableHead>ID</TableHead>
                         <TableHead>DATE</TableHead>
+                        <TableHead>BUYER</TableHead>
                         <TableHead>TOTAL</TableHead>
                         <TableHead>PAID</TableHead>
                         <TableHead>DELIVERED</TableHead>
@@ -53,6 +54,9 @@ export default async function AdminOrderPage(props:{
                             </TableCell>
                             <TableCell>
                             {formatDateTime(order.createdAt).dateTime}
+                            </TableCell>
+                            <TableCell>
+                            { order.user.name}
                             </TableCell>
                             <TableCell>
                             {formatCurrency(order.totalPrice)}
