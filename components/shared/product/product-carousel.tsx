@@ -29,7 +29,7 @@ export default function ProductCarousel({ data} : { data : Product[]}) {
                             <Link href={`/product/${product.slug}`}>
                                 <div className="relative mx-auto">
                                     <Image
-                                        src={product.banner}
+                                        src={product.banner || ''}
                                         alt={product.name}
                                         width='0'
                                         height='0'
