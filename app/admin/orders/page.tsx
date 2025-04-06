@@ -15,23 +15,47 @@ export const metadata: Metadata = {
 
 export default async function AdminOrderPage(props:{
     searchParams: Promise<{
-        page: string
+        page: string;
+        query: string;
     }>
 }) {
 
-    const {page} = await props.searchParams;
+    const {page = '1', query : searchText } = await props.searchParams;
     const session = await auth();
 
     if(session?.user?.name !== 'admin') throw new Error('User is not authorized');
 
     const orders = await getAllOrders({
         page:Number(page),
+        query: searchText
     });
 
 
   return (
     <div className="space-y-2 ">
-        <h2 className="h2-bold">Orders</h2>
+        <div className="flex-between">
+            <div className="flex items-center gap-3">
+                <h1 className="h2-bold">Orders</h1>
+                {
+                    searchText && (
+                        <div>
+                            Filtered by <i>&quot;{searchText}</i>{' '}
+                            <Link href={'/admin/orders'}>
+                                <Button variant={'outline'} size={'sm'}>
+                                    Remove Filter
+                                </Button>
+                            </Link>
+                        </div>
+                    )
+                }
+            </div>
+            <Button
+                asChild
+                variant={'default'}
+            >
+                <Link href={'/admin/products/create'}>Create Product</Link>
+            </Button>
+        </div>
         <div className="overflow-x-auto">
             <Table>
                 <TableHeader>
