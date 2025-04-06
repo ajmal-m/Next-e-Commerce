@@ -367,14 +367,14 @@ export async function getAllOrders({
 }){
 
     const queryData : Prisma.OrderWhereInput = query && query !== 'all' ? {
-            name:{
-                contains:query,
-                mode:'insensitive'
-            } as Prisma.StringFilter
+        name:{
+            contains:query,
+            mode:'insensitive'
+        } as Prisma.StringFilter
     } : {};
     const data = await prisma.order.findMany({
         where:{
-            ...queryData
+            
         },
         orderBy:{
             createdAt:'desc'
@@ -396,7 +396,7 @@ export async function getAllOrders({
         data,
         totalPages: Math.ceil(dataCount/limit)
     }
-}
+};
 
 
 // Delete an Order
