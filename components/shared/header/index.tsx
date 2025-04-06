@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { APP_NAME } from '@/lib/constants';
 import Menu from './menu';
 import CategoryDrawer from './category-drawer';
+import Search from './search';
 
 
 export default function Header() {
@@ -18,7 +19,8 @@ export default function Header() {
                 </Link>
             </div>
             <div className="space-x-2">
-               <Menu/>
+              <Search/>
+              <Menu/>
             </div>
         </div>
     </header>
