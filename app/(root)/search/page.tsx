@@ -30,10 +30,39 @@ export default async function SearchPage( props : {
         page: Number(page)
 
     });
+
+    // Construct Filter URL
+    const getFilterUrl = ({
+        c,
+        s,
+        r,
+        p,
+        pg
+    }: {
+        c ?: string;
+        s ?: string;
+        r ?: string;
+        p ?: string;
+        pg ?: string;
+
+    }) => {
+        const params = {q, category, price, rating, sort, page};
+
+        if(c) params.category = c;
+        if(p) params.price = p;
+        if(r) params.rating = r;
+        if(s) params.sort = s;
+        if(pg) params.page = pg;
+
+        return `/search?${new URLSearchParams(params).toString()}`;
+
+    };
+
+
     return (
         <div className="grid md:grid-cols-5 md:gap-5">
             <div className="filters-link">
-
+                {/* Filter */}
             </div>
             <div className="md:col-span-4 space-y-4">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
