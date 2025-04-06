@@ -2,6 +2,7 @@ import React from 'react';
 import ProductList from '@/components/shared/product/product-list';
 import { getLatestProducts , getFeaturedProducts } from '@/lib/actions/product.actions';
 import ProductCarousel from '@/components/shared/product/product-carousel';
+import ViewAllProductButton from '@/components/view-all-product-button';
 
 export const metadata = {
   title:`Home`
@@ -21,6 +22,7 @@ export default async  function Home() {
         )
       }
       <ProductList data={latestProducts} title='Newest Arrivals'/>
+      <ViewAllProductButton/>
     </>
   )
 }
