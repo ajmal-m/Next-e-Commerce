@@ -26,6 +26,9 @@ const prices = [
     },
 ];
 
+
+const ratings = [4,3,2,1];
+
 export default async function SearchPage( props : {
     searchParams: Promise<{
         q?:string;
@@ -138,6 +141,34 @@ export default async function SearchPage( props : {
                                     href={getFilterUrl({ p: p.value})}
                                 >
                                     {p.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+
+                {/* Rating Links */}
+                <div className="text-xl mb-2 mt-8">
+                    Customer Rating
+                </div>
+                <div>
+                    <ul className='space-y-1'>
+                        <li>
+                            <Link
+                                className={`${ ( rating === 'all') &&  'font-bold'}`}
+                                href={getFilterUrl({ r:'all' })}
+                            >
+                                Any
+                            </Link>
+                        </li>
+                        { ratings.map((r) => (
+                            <li key={r}>
+                                <Link 
+                                    className={`${rating === r.toString() && 'font-bold'}`}
+                                    href={getFilterUrl({ r: `${r}`})}
+                                >
+                                    {`${r} starts & Up`}
                                 </Link>
                             </li>
                         ))}
