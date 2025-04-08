@@ -136,3 +136,12 @@ export const updateUserSchema = updateProfileSchema.extend({
     id : z.string().min(1, 'ID is Required'),
     role : z.string().min(1, 'Role is Required'),
 });
+
+// Schema for Insert Reviews
+export const insertReviewSchema = z.object({
+    title: z.string().min(3, 'Title Must be atleast 3 characters'),
+    description: z.string().min(3, 'Description Must be atleast 3 characters'),
+    productId: z.string().min(1, 'Product is Required'),
+    userId: z.string().min(1, 'User is Required'),
+    rating: z.coerce.number().int().min(1, 'Rating Must be atleast 1').max(5, 'Rating must be atmost 5')
+});
