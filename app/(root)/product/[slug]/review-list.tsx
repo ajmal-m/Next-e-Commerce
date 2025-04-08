@@ -3,6 +3,7 @@
 import { Review } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
+import ReviewForm from "./review-form";
 
 export default function ReviewList({ userId, productId, productSlug} : {
     userId : string;
@@ -17,6 +18,7 @@ export default function ReviewList({ userId, productId, productSlug} : {
             userId ? (
               <>
               {/* Review Here */}
+              <ReviewForm userId={userId} productId={productId} onReviewSubmitted={() => {}}/>
               </>
             ) : (
               <div>
