@@ -32,6 +32,39 @@ const ratings = [4,3,2,1];
 
 const sortOrders = ['newest', 'lowest', 'highest', 'rating'];
 
+export async function generateMetadata(props: {
+    searchParams: Promise<{
+        q:string;
+        price:string;
+        category:string;
+        rating:string;
+    }>
+}){
+
+    const {q = 'all', price ='all', category ='all', rating = 'all'} = await props.searchParams;
+
+    const isQuerySet = q && q!== 'all' && q.trim() !== '' ;
+    const isCategorySet = category && category!== 'all' && category.trim() !== '' ;
+    const isPriceSet = price && price!== 'all' && price.trim() !== '' ;
+    const isratingSet = rating && rating!== 'all' && rating.trim() !== '' ;
+
+    if(isQuerySet || isCategorySet || isPriceSet || isratingSet){
+        return {
+            title:`Search ${isQuerySet ? q : ''} ${isCategorySet ? `: category ${category}` : ''}
+            
+            ${isPriceSet ? `: Price ${price}`:''}
+            ${isratingSet ? `: Rating ${rating}` : ''}`,
+
+        };
+    }else{
+        return{
+            title:'Search Products',
+    
+        }
+    }
+}
+
+
 export default async function SearchPage( props : {
     searchParams: Promise<{
         q?:string;
