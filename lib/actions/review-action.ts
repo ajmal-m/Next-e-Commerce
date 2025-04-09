@@ -110,7 +110,6 @@ export async function createUpdateReview( data : z.infer<typeof insertReviewSche
 export async function getReviews({ productId }: {
     productId: string
 }){
-    try {
         const data = await prisma.review.findMany({
             where:{ productId: productId},
             include:{
@@ -126,12 +125,6 @@ export async function getReviews({ productId }: {
         });
 
         return {data};
-    } catch (error) {
-        return {
-            success: false,
-            message: formatErrors(error)
-        }
-    }
 };
 
 
@@ -139,21 +132,16 @@ export async function getReviews({ productId }: {
 export async function getReviewByProductId({
     productId
 } : { productId : string;}){
-    try {
         const session = await auth();
 
         if(!session) throw new Error("user is not authenticated..");
 
-        return await prisma.review.findFirst({
+        const res = await prisma.review.findFirst({
             where:{
                 productId: productId,
                 userId: session.user.id
             }
-        })
-    } catch (error) {
-        return {
-            success: false,
-            message: formatErrors(error)
-        }
-    }
+        });
+
+        return res;
 }

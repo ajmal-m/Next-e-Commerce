@@ -30,8 +30,10 @@ export default function ReviewList({ userId, productId, productSlug} : {
     loadReviews();
   }, [productId])
 
-  const reload = () => {
-    console.log('Review submitted');
+  // Reload review after created / Updated
+  const reload = async () => {
+    const res = await getReviews({productId});
+    setReview([ ...res.data]);
   }
 
   return (
