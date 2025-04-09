@@ -5,12 +5,21 @@ import Link from "next/link";
 import { useState } from "react";
 import ReviewForm from "./review-form";
 
+
+
 export default function ReviewList({ userId, productId, productSlug} : {
     userId : string;
     productId: string;
     productSlug: string;
 }) {
-    const [reviews, setReview] = useState<Review[]>([]);
+
+
+  const [reviews, setReview] = useState<Review[]>([]);
+
+  const reload = () => {
+
+  }
+
   return (
     <div className="space-y-4">
         { reviews.length === 0 && (<div>No Review Yet</div>)}
@@ -18,7 +27,7 @@ export default function ReviewList({ userId, productId, productSlug} : {
             userId ? (
               <>
               {/* Review Here */}
-              <ReviewForm userId={userId} productId={productId} onReviewSubmitted={() => {}}/>
+              <ReviewForm userId={userId} productId={productId} onReviewSubmitted={reload}/>
               </>
             ) : (
               <div>

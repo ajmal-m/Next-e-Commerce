@@ -10,14 +10,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
-import { Form, useForm } from "react-hook-form";
+import { Form, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { createUpdateReview } from "@/lib/actions/review-action";
 
 export default function ReviewForm({ userId, productId, onReviewSubmitted} : {
     userId: string;
     productId: string;
-    onReviewSubmitted ?: () => void
+    onReviewSubmitted : () => void
 }) {
 
     const [open, setOpen] = useState(false);
@@ -27,10 +28,31 @@ export default function ReviewForm({ userId, productId, onReviewSubmitted} : {
         defaultValues: reviewDefaultFormValues
     });
 
-
+    // Open Form handler
     const handleOpenForm = () => {
+        form.setValue('productId', productId);
+        form.setValue('userId', userId);
         setOpen(true);
     };
+
+    // Submit form handler
+    const onSubmit:SubmitHandler<z.infer<typeof insertReviewSchema>> = async (values) => {
+        const res = await createUpdateReview({...values, productId});
+
+        if(! res.success){
+            toast.error(res.message);
+            return
+        }
+
+        setOpen(false);
+
+
+        onReviewSubmitted();
+
+
+        toast.success(res.message);
+
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -39,7 +61,7 @@ export default function ReviewForm({ userId, productId, onReviewSubmitted} : {
             </Button>
             <DialogContent className="sm:max-w-[425px]">
                 <Form {...form}>
-                    <form  method="post">
+                    <form  method="post" onSubmit={form.handleSubmit(onSubmit)}>
                         <DialogTitle>
                             Write a Review
                         </DialogTitle>
