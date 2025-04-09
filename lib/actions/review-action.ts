@@ -103,4 +103,57 @@ export async function createUpdateReview( data : z.infer<typeof insertReviewSche
             message: formatErrors(error)
         }
     }
+};
+
+
+// Get All Reviews for a product
+export async function getReviews({ productId }: {
+    productId: string
+}){
+    try {
+        const data = await prisma.review.findMany({
+            where:{ productId: productId},
+            include:{
+                user:{
+                    select:{
+                        name:true
+                    }
+                }
+            },
+            orderBy:{
+                createdAt:'desc'
+            }
+        });
+
+        return {data};
+    } catch (error) {
+        return {
+            success: false,
+            message: formatErrors(error)
+        }
+    }
+};
+
+
+// Get the review written by the current user
+export async function getReviewByProductId({
+    productId
+} : { productId : string;}){
+    try {
+        const session = await auth();
+
+        if(!session) throw new Error("user is not authenticated..");
+
+        return await prisma.review.findFirst({
+            where:{
+                productId: productId,
+                userId: session.user.id
+            }
+        })
+    } catch (error) {
+        return {
+            success: false,
+            message: formatErrors(error)
+        }
+    }
 }
