@@ -1,5 +1,6 @@
 import {  z} from 'zod';
 import { formatNumberWithDecimal } from './utils';
+import { PAYMENT_METHODS } from './constants';
 
 const currency =  z.string().refine( (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))), 'Price Must have Two decimal places');
 
@@ -15,7 +16,14 @@ export const insertProductSchema = z.object({
     isFeatured: z.boolean(),
     banner: z.string().nullable(),
     price: currency
-})
+});
+
+
+// Schema for updating a prosuct
+export const updateProductSchema = insertProductSchema.extend({
+    id : z.string().min(1, 'Id is required'),
+
+});
 
 
 
@@ -58,4 +66,82 @@ export const insertCartSchema = z.object({
     taxPrice : currency,
     sessionCartId: z.string().min(1, "Session cart id is required"),
     userId: z.string().optional().nullable()
+});
+
+
+// Schema for shipping address
+export const shippingAddressSchema = z.object({
+    fullName: z.string().min(3, "Name must be atleast 3 characters."),
+    streetAddress: z.string().min(3, "Address must be atleast 3 characters."),
+    city: z.string().min(3, "City must be atleast 3 characters."),
+    postalCode: z.string().min(3, "Postal code must be atleast 3 characters."),
+    country: z.string().min(3, "country must be atleast 3 characters."),
+    lat: z.string().optional(),
+    lng: z.string().optional()
+});
+
+
+// Schema for Payment Methods
+export const paymentMethodSchema = z.object({
+    type: z.string().min(1, 'Payment method is required')
+}).refine((data) => PAYMENT_METHODS.includes(data.type),{
+    path:['type'],
+    message:"Invalid payment method"
+} );
+
+
+// Schema for inserting order
+export const insertOrderSchema = z.object({
+    userId: z.string().min(1, 'User is Required'),
+    itemsPrice: currency,
+    shippingPrice: currency,
+    taxPrice: currency,
+    totalPrice: currency,
+    paymentMethod : z.string().refine((data) => PAYMENT_METHODS.includes(data), {
+        message: 'Invalid payment method'
+    }),
+    shippingAddress: shippingAddressSchema
+});
+
+
+// Schema for inserting an Order item
+export const insertOrderItemSchema = z.object({
+    productId : z.string(),
+    slug : z.string(),
+    image : z.string(),
+    name : z.string(),
+    price: currency,
+    qty: z.number()
+});
+
+
+
+// Schema for for Paypal Result
+export const paymentResultSchema = z.object({
+    id: z.string(),
+    status: z.string(),
+    email_address: z.string(),
+    pricePaid: z.string(),
+});
+
+// Schema for updating user profile
+export const updateProfileSchema = z.object({
+    name: z.string().min(3, 'name atleast 3 characters.'),
+    email: z.string().min(3, 'Email must be atleast 3 characters.')
+});
+
+
+// Schema for update users
+export const updateUserSchema = updateProfileSchema.extend({
+    id : z.string().min(1, 'ID is Required'),
+    role : z.string().min(1, 'Role is Required'),
+});
+
+// Schema for Insert Reviews
+export const insertReviewSchema = z.object({
+    title: z.string().min(3, 'Title Must be atleast 3 characters'),
+    description: z.string().min(3, 'Description Must be atleast 3 characters'),
+    productId: z.string().min(1, 'Product is Required'),
+    userId: z.string().min(1, 'User is Required'),
+    rating: z.coerce.number().int().min(1, 'Rating Must be atleast 1').max(5, 'Rating must be atmost 5')
 });

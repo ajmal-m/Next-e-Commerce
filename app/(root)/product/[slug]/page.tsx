@@ -6,6 +6,9 @@ import { notFound } from 'next/navigation';
 import ProductPrice from '@/components/shared/product/product-price';
 import ProductImages from '@/components/shared/product/product-images';
 import AddToCart from '@/components/shared/product/add-to-cart';
+import { getMyCart } from '@/lib/actions/cart.actions';
+import ReviewList from './review-list';
+import { auth } from '@/auth';
 
 export default async  function page(props:{
   params: Promise<{ slug : string}>
@@ -18,8 +21,15 @@ export default async  function page(props:{
   if(!product){
     notFound()
   }
+
+  const session = await auth();
+  const userId = session?.user.id;
+
+
+  const cart = await getMyCart();
   
   return (
+    <>
     <section>
       <div className='grid grid-cols-1 md:grid-cols-5'>
         {/* Images column */}
@@ -66,6 +76,7 @@ export default async  function page(props:{
               {
                 product.stock && (
                   <AddToCart
+                    cart={cart}
                     item={
                       {
                         productId:product.id,
@@ -84,5 +95,15 @@ export default async  function page(props:{
         </div>
       </div>
     </section>
+    <section className='mt-10'>
+      <h2 className="h2-bold">Customer Reviews</h2>
+      <ReviewList
+        userId={userId || ''}
+        productId={product.id}
+        productSlug={product.slug}
+
+      />
+    </section>
+    </>
   )
 }
